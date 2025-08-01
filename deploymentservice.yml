@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment1
+metadata:
+  name: health-app-deployment
+spec:
+  selector:
+    matchLabels:
+      app: health-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: health-app
+    spec:
+      containers:
+        - name: health-app
+          image: pavanidubasi/health-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8082
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: health-app-service
+spec:
+  selector:
+    app: health-app
+  type: NodePort 
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8082
+ type: NodePort
+      nodePort: 30036 
