@@ -1,12 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment1
+kind: Deployment
 metadata:
   name: health-app-deployment
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: health-app
-  replicas: 2
   template:
     metadata:
       labels:
@@ -28,10 +28,10 @@ metadata:
 spec:
   selector:
     app: health-app
-  type: NodePort 
+  type: NodePort
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8082
- type: NodePort
-      nodePort: 30036 
+      port: 8080        # Service port (internal cluster access)
+      targetPort: 8082  # Port your container listens on
+      nodePort: 30036   # External access via Node IP:30036
+
